@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
 import { Box, Button, FormControl, Input, InputLabel, Typography } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
@@ -8,31 +9,90 @@ import { useStore } from '../../shared/store/authStore';
 
 const { loginUser } = utils;
 
+export type ErrorData = {
+  status: 'fail';
+  data: {
+    message: string;
+  };
+};
+
+export type UserData = {
+  status: 'success';
+  data: {
+    user: {
+      name: string;
+      __v: string;
+      id: string;
+      _id: string;
+      password: string;
+    };
+  };
+};
+
 export default function Login() {
-  const { register, watch } = useForm();
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
   const { setUser, user } = useStore();
 
-  const formStyles = {
-    width: '75%',
-    marginBottom: '20px',
-  };
+  const [err, setErr] = useState({ isError: false, msg: '' });
+
+  const formStyles = { width: '75%', marginBottom: '20px' };
+
+  function handleFailedLogin(errData: ErrorData) {
+    const { data } = errData;
+    setErr({ isError: true, msg: data.message });
+  }
+
+  function handleSuccessfulLogin(userData: UserData) {
+    const {
+      data: { user },
+    } = userData;
+
+    // Strip unneeeded properties from the user before putting into the store
+    ['__v', '_id', 'password'].forEach(
+      (prop) => delete user[prop as keyof UserData['data']['user']]
+    );
+
+    setUser(user);
+  }
 
   async function submitHandler() {
     const [username, password] = [watch('name'), watch('password')];
-    const { data } = await loginUser(username, password);
-    const { user } = data;
+    const data = await loginUser(username, password);
 
-    // Strip unneeeded properties from the user before putting into the store
-    ['__v', '_id', 'password'].forEach((prop) => delete user[prop]);
-
-    setUser(user);
+    if (data.status === 'fail') handleFailedLogin(data);
+    if (data.status === 'success') handleSuccessfulLogin(data);
   }
 
   // After the user logs in, there will be a user in the store. Redirect to the homepage
   useEffect(() => {
     if (user) navigate('/');
   }, [user, navigate]);
+  const renderInputError = (message: string) => (
+    <Typography
+      variant="body1"
+      component="p"
+      sx={{
+        color: '#ff4d4d',
+        marginBottom: '10px',
+      }}
+    >
+      {message}
+    </Typography>
+  );
+
+  const renderFormError = (input: string) => (
+    <ErrorMessage
+      name={input}
+      errors={errors}
+      render={({ message }) => renderInputError(message)}
+    />
+  );
 
   return (
     <Box
@@ -45,25 +105,59 @@ export default function Login() {
         alignItems: 'center',
       }}
     >
-      <FormControl sx={{ ...formStyles }}>
-        <InputLabel htmlFor="name">Your name: </InputLabel>
-        <Input {...register('name')} id="name" />
-      </FormControl>
-      <FormControl sx={{ ...formStyles }}>
-        <InputLabel htmlFor="password">Your password: </InputLabel>
-        <Input {...register('password')} id="password" type="password" />
-      </FormControl>
-      <Button
-        variant="contained"
-        color="secondary"
-        sx={{
-          width: '50%',
-          marginBottom: '10px',
+      {err.isError && (
+        <Typography
+          variant="h6"
+          component="h6"
+          marginBottom="25px"
+          sx={{ color: '#ff4d4d' }}
+        >
+          {err.msg}
+        </Typography>
+      )}
+      <form
+        onSubmit={handleSubmit(submitHandler)}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100%',
         }}
-        onClick={submitHandler}
       >
-        Login
-      </Button>
+        {renderFormError('name')}
+        <FormControl sx={{ ...formStyles }}>
+          <InputLabel htmlFor="name">Your name: </InputLabel>
+          <Input
+            {...register('name', {
+              required: 'Username is required',
+            })}
+            id="name"
+          />
+        </FormControl>
+        {renderFormError('password')}
+        <FormControl sx={{ ...formStyles }}>
+          <InputLabel htmlFor="password">Your password: </InputLabel>
+          <Input
+            {...register('password', {
+              required: 'Password is required',
+            })}
+            id="password"
+            type="password"
+          />
+        </FormControl>
+        <Button
+          variant="contained"
+          color="secondary"
+          sx={{
+            width: '50%',
+            marginBottom: '10px',
+          }}
+          type="submit"
+        >
+          Login
+        </Button>
+      </form>
       <Typography variant="body2" component="p">
         Don't have an account? <Link to="/register">Register here</Link>
       </Typography>

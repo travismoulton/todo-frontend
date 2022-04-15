@@ -36,14 +36,15 @@ export default function Register() {
     watch,
     formState: { errors },
   } = useForm();
+
   const navigate = useNavigate();
   const { setUser, user } = useStore();
   const [err, setErr] = useState({ isError: false, msg: '' });
 
-  const formStyles = {
-    width: '75%',
-    marginBottom: '20px',
-  };
+  // After the user registers, there will be a user in the store. Redirect to the homepage
+  useEffect(() => {
+    if (user) navigate('/');
+  }, [user, navigate]);
 
   function handleFailedRegister(errData: ErrorData) {
     const { data } = errData;
@@ -64,36 +65,37 @@ export default function Register() {
   }
 
   async function submitHandler() {
-    const [username, password] = [watch('name'), watch('password')];
-    console.log({ username, password });
+    const [username, password]: [string, string] = [watch('name'), watch('password')];
+
     const data = await registerUser(username, password);
 
     if (data.status === 'fail') handleFailedRegister(data);
     if (data.status === 'success') handleSuccessfulRegister(data);
   }
 
-  // After the user registers, there will be a user in the store. Redirect to the homepage
-  useEffect(() => {
-    if (user) navigate('/');
-  }, [user, navigate]);
+  const renderInputError = (message: string) => (
+    <Typography
+      variant="body1"
+      component="p"
+      sx={{
+        color: '#ff4d4d',
+        marginBottom: '10px',
+      }}
+    >
+      {message}
+    </Typography>
+  );
 
-  function renderInputError(message: string) {
-    return (
-      <Typography
-        variant="body1"
-        component="p"
-        sx={{
-          color: '#ff4d4d',
-          marginBottom: '10px',
-        }}
-      >
-        {message}
-      </Typography>
-    );
-  }
+  const renderFormError = (input: string) => (
+    <ErrorMessage
+      name={input}
+      errors={errors}
+      render={({ message }) => renderInputError(message)}
+    />
+  );
 
   function confirmPasswordsMatch() {
-    const [password, confirmPassowrd] = [watch('password'), watch('confirm')];
+    const [password, confirmPassowrd]: string[] = [watch('password'), watch('confirm')];
 
     if (password === confirmPassowrd) {
       return true;
@@ -101,6 +103,8 @@ export default function Register() {
       return false;
     }
   }
+
+  const formStyles = { width: '75%', marginBottom: '20px' };
 
   return (
     <Box
@@ -133,12 +137,7 @@ export default function Register() {
           width: '100%',
         }}
       >
-        <ErrorMessage
-          errors={errors}
-          name="name"
-          render={({ message }) => renderInputError(message)}
-        />
-
+        {renderFormError('name')}
         <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="name">Your name: </InputLabel>
           <Input
@@ -148,13 +147,7 @@ export default function Register() {
             id="name"
           />
         </FormControl>
-
-        <ErrorMessage
-          errors={errors}
-          name="password"
-          render={({ message }) => renderInputError(message)}
-        />
-
+        {renderFormError('password')}
         <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="password">Your password: </InputLabel>
           <Input
@@ -170,20 +163,15 @@ export default function Register() {
             autoComplete="false"
           />
         </FormControl>
-
-        <ErrorMessage
-          errors={errors}
-          name="name"
-          render={({ message }) => renderInputError(message)}
-        />
-
+        {renderFormError('confirm')}
         <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="confirm">Confirm Password: </InputLabel>
           <Input
             {...register('confirm', {
               required: true,
               validate: {
-                confirmPasswordsMatch: confirmPasswordsMatch || 'Passwords dont match',
+                confirmPasswordsMatch: () =>
+                  confirmPasswordsMatch() || 'Passwords dont match',
               },
             })}
             id="confirm"
