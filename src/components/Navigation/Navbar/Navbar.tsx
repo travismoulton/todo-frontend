@@ -22,7 +22,7 @@ export default function Navbar() {
         justifyContent: 'space-around',
       }}
     >
-      <StyledLink to="/register">Login</StyledLink>
+      <StyledLink to="/login">Login</StyledLink>
     </AppBar>
   );
 }
