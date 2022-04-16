@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
 import { Box, Button, FormControl, Input, InputLabel, Typography } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
 
+import AuthFormInputError from '../AuthFormInputError/AuthFormInputError';
 import { utils } from './loginUtils';
 import { useStore } from '../../shared/store/authStore';
 
@@ -73,26 +73,6 @@ export default function Login() {
   useEffect(() => {
     if (user) navigate('/');
   }, [user, navigate]);
-  const renderInputError = (message: string) => (
-    <Typography
-      variant="body1"
-      component="p"
-      sx={{
-        color: '#ff4d4d',
-        marginBottom: '10px',
-      }}
-    >
-      {message}
-    </Typography>
-  );
-
-  const renderFormError = (input: string) => (
-    <ErrorMessage
-      name={input}
-      errors={errors}
-      render={({ message }) => renderInputError(message)}
-    />
-  );
 
   return (
     <Box
@@ -125,7 +105,8 @@ export default function Login() {
           width: '100%',
         }}
       >
-        {renderFormError('name')}
+        <AuthFormInputError errors={errors} input="name" />
+
         <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="name">Your name: </InputLabel>
           <Input
@@ -135,7 +116,9 @@ export default function Login() {
             id="name"
           />
         </FormControl>
-        {renderFormError('password')}
+
+        <AuthFormInputError errors={errors} input="password" />
+
         <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="password">Your password: </InputLabel>
           <Input
@@ -146,6 +129,7 @@ export default function Login() {
             type="password"
           />
         </FormControl>
+
         <Button
           variant="contained"
           color="secondary"

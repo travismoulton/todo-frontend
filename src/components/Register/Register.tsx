@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
 import { Box, Button, FormControl, Input, InputLabel, Typography } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+import AuthFormInputError from '../AuthFormInputError/AuthFormInputError';
 import { utils } from './registerUtils';
 import { useStore } from '../../shared/store/authStore';
 
@@ -73,35 +73,10 @@ export default function Register() {
     if (data.status === 'success') handleSuccessfulRegister(data);
   }
 
-  const renderInputError = (message: string) => (
-    <Typography
-      variant="body1"
-      component="p"
-      sx={{
-        color: '#ff4d4d',
-        marginBottom: '10px',
-      }}
-    >
-      {message}
-    </Typography>
-  );
-
-  const renderFormError = (input: string) => (
-    <ErrorMessage
-      name={input}
-      errors={errors}
-      render={({ message }) => renderInputError(message)}
-    />
-  );
-
   function confirmPasswordsMatch() {
     const [password, confirmPassowrd]: string[] = [watch('password'), watch('confirm')];
 
-    if (password === confirmPassowrd) {
-      return true;
-    } else {
-      return false;
-    }
+    return password === confirmPassowrd;
   }
 
   const formStyles = { width: '75%', marginBottom: '20px' };
@@ -137,7 +112,8 @@ export default function Register() {
           width: '100%',
         }}
       >
-        {renderFormError('name')}
+        <AuthFormInputError input="name" errors={errors} />
+
         <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="name">Your name: </InputLabel>
           <Input
@@ -147,7 +123,9 @@ export default function Register() {
             id="name"
           />
         </FormControl>
-        {renderFormError('password')}
+
+        <AuthFormInputError input="password" errors={errors} />
+
         <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="password">Your password: </InputLabel>
           <Input
@@ -163,12 +141,13 @@ export default function Register() {
             autoComplete="false"
           />
         </FormControl>
-        {renderFormError('confirm')}
+
+        <AuthFormInputError input="confirm" errors={errors} />
+
         <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="confirm">Confirm Password: </InputLabel>
           <Input
             {...register('confirm', {
-              required: true,
               validate: {
                 confirmPasswordsMatch: () =>
                   confirmPasswordsMatch() || 'Passwords dont match',
