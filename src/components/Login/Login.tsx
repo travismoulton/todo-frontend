@@ -61,6 +61,8 @@ export default function Login() {
     setUser(user);
   }
 
+  console.log({ user });
+
   async function submitHandler() {
     const [username, password] = [watch('name'), watch('password')];
     const data = await loginUser(username, password);
