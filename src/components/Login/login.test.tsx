@@ -36,6 +36,14 @@ describe('<Login />', () => {
     return history;
   }
 
+  test('renders', async () => {
+    await setup();
+
+    expect(screen.getByText('Login')).toBeInTheDocument();
+    expect(screen.getByText('Your name:')).toBeInTheDocument();
+    expect(screen.getByText('Your password:')).toBeInTheDocument();
+  });
+
   test('calls the API if all fields are filled out, and rediects to the homepage', async () => {
     const history = await setup();
 
