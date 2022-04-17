@@ -41,8 +41,6 @@ export default function Login() {
 
   const [err, setErr] = useState({ isError: false, msg: '' });
 
-  const formStyles = { width: '75%', marginBottom: '20px' };
-
   function handleFailedLogin(errData: ErrorData) {
     const { data } = errData;
     setErr({ isError: true, msg: data.message });
@@ -61,8 +59,6 @@ export default function Login() {
     setUser(user);
   }
 
-  console.log({ user });
-
   async function submitHandler() {
     const [username, password] = [watch('name'), watch('password')];
     const data = await loginUser(username, password);
@@ -75,6 +71,8 @@ export default function Login() {
   useEffect(() => {
     if (user) navigate('/');
   }, [user, navigate]);
+
+  const formStyles = { width: '75%', marginBottom: '20px' };
 
   return (
     <Box
