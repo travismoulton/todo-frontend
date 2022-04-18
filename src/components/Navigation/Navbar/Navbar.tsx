@@ -23,6 +23,7 @@ export default function Navbar() {
       }}
     >
       <StyledLink to="/login">Login</StyledLink>
+      <StyledLink to="/add-todo">Add todo</StyledLink>
     </AppBar>
   );
 }

@@ -5,6 +5,7 @@ import HomePage from './components/HomePage/HomePage';
 import Navbar from './components/Navigation/Navbar/Navbar';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
+import AddTodo from './components/AddTodo/AddTodo';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/add-todo" element={<AddTodo />} />
         <Route path="/" element={<HomePage />} />
       </Routes>
     </div>
