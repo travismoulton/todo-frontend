@@ -2,17 +2,15 @@ import { useForm } from 'react-hook-form';
 import {
   Box,
   Button,
-  createTheme,
   FormControl,
   Input,
   InputLabel,
   TextField,
-  ThemeProvider,
   Typography,
 } from '@mui/material';
-import { LocalizationProvider } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { DatePicker } from '@mui/lab';
+
+import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
+
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -79,13 +77,8 @@ export default function AddTodo() {
             }}
           />
         </FormControl>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            onChange={(date) => setDueDate(date)}
-            renderInput={(params) => <TextField {...params} sx={{ ...formStyles }} />}
-            value={dueDate}
-          />
-        </LocalizationProvider>
+
+        <CustomDatePicker setDate={setDueDate} />
       </form>
     </Box>
   );
