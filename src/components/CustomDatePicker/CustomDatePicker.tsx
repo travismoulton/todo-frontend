@@ -64,6 +64,7 @@ export default function CustomDay({ setDate }: { setDate: IProps['setDate'] }) {
         }}
         renderDay={renderPickerDay}
         renderInput={(params) => <TextField {...params} sx={{ ...formStyles }} />}
+        label="Due Date"
       />
     </LocalizationProvider>
   );

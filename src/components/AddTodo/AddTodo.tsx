@@ -1,20 +1,29 @@
 import { useForm } from 'react-hook-form';
 import {
+  Autocomplete,
   Box,
   Button,
   FormControl,
   Input,
   InputLabel,
   TextField,
-  Typography,
 } from '@mui/material';
-
-import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
-
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
+import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 import { useStore } from '../../shared/store/authStore';
+import { utils } from './addTodoUtils';
+
+const { addTodo } = utils;
+
+export interface ITodo {
+  title: string;
+  content: string;
+  dueDate: Date | null;
+  category: string | null;
+  priority: string | null;
+}
 
 export default function AddTodo() {
   const {
@@ -24,9 +33,24 @@ export default function AddTodo() {
     formState: { errors },
   } = useForm();
 
-  const { user } = useStore();
+  const navigate = useNavigate();
+
   const [dueDate, setDueDate] = useState<Date | null>(new Date());
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
+  const [category, setCategory] = useState<string | null>(null);
+  const [priority, setPriority] = useState<string | null>(null);
+
+  async function submitHandler() {
+    const todoData: ITodo = {
+      title: watch('title'),
+      content: watch('description'),
+      dueDate,
+      category,
+      priority,
+    };
+
+    navigate('/');
+  }
 
   const formStyles = { width: '75%', marginBottom: '25px' };
 
@@ -49,6 +73,7 @@ export default function AddTodo() {
           alignItems: 'center',
           width: '100%',
         }}
+        onSubmit={handleSubmit(submitHandler)}
       >
         <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="title">Title: </InputLabel>
@@ -79,6 +104,34 @@ export default function AddTodo() {
         </FormControl>
 
         <CustomDatePicker setDate={setDueDate} />
+
+        <FormControl sx={{ ...formStyles }}>
+          <Autocomplete
+            options={['Work', 'School', 'Chore', 'Family']}
+            renderInput={(params) => <TextField {...params} label="Category" />}
+            onChange={(_e, val) => setCategory(val)}
+          />
+        </FormControl>
+
+        <FormControl sx={{ ...formStyles }}>
+          <Autocomplete
+            options={['1', '2', '3']}
+            renderInput={(params) => <TextField {...params} label="Priority" />}
+            onChange={(_e, val) => setPriority(val)}
+          />
+        </FormControl>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          sx={{
+            width: '50%',
+            marginBottom: '10px',
+          }}
+          type="submit"
+        >
+          Add Todo
+        </Button>
       </form>
     </Box>
   );
