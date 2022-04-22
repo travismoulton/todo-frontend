@@ -9,7 +9,8 @@ import {
   TextField,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, ComponentType } from 'react';
+import { styled } from '@mui/material/styles';
 
 import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 import { useStore } from '../../shared/store/authStore';
@@ -24,6 +25,20 @@ export interface ITodo {
   category: string | null;
   priority: string | null;
 }
+
+// const StyledAutocomplete = styled(Autocomplete)({
+//   '& .MuiAutocomplete-inputRoot': {
+//     color: 'purple',
+
+//     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+//       borderColor: 'purple',
+//     },
+
+//     '& .MuiAutocomplete-option': {
+//       backgrouncColor: 'red',
+//     },
+//   },
+// });
 
 export default function AddTodo() {
   const {
@@ -48,6 +63,8 @@ export default function AddTodo() {
       category,
       priority,
     };
+
+    await addTodo(todoData);
 
     navigate('/');
   }
@@ -75,7 +92,7 @@ export default function AddTodo() {
         }}
         onSubmit={handleSubmit(submitHandler)}
       >
-        <FormControl sx={{ ...formStyles }}>
+        {/* <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="title">Title: </InputLabel>
           <Input
             {...register('title', {
@@ -109,9 +126,9 @@ export default function AddTodo() {
           <Autocomplete
             options={['Work', 'School', 'Chore', 'Family']}
             renderInput={(params) => <TextField {...params} label="Category" />}
-            onChange={(_e, val) => setCategory(val)}
+            onChange={(_e, val) => setCategory(val as string)}
           />
-        </FormControl>
+        </FormControl> */}
 
         <FormControl sx={{ ...formStyles }}>
           <Autocomplete
