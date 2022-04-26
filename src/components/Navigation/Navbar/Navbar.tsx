@@ -14,7 +14,7 @@ const StyledLink = styled(Link)`
 export default function Navbar() {
   return (
     <AppBar
-      color="secondary"
+      color="primary"
       sx={{
         height: '3rem',
         padding: '1rem 10rem',
