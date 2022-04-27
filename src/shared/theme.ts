@@ -1,23 +1,42 @@
 import { createTheme } from '@mui/material';
 import { purple, lightGreen } from '@mui/material/colors';
 
-let theme = createTheme({
-  palette: {
-    primary: {
-      main: purple[500],
-      light: purple[300],
-      dark: purple[800],
-    },
-    secondary: {
-      main: lightGreen[500],
-      light: lightGreen[300],
-      dark: lightGreen[800],
-    },
+const palette = {
+  primary: {
+    main: purple[500],
+    light: purple[300],
+    dark: purple[800],
   },
-});
+  secondary: {
+    main: lightGreen[500],
+    light: lightGreen[300],
+    dark: lightGreen[800],
+  },
+};
 
-theme = createTheme(theme, {
+const theme = createTheme({
+  palette,
   components: {
+    MuiInput: {
+      styleOverrides: {
+        input: {
+          '&:hover': {
+            borderColor: palette.primary.main,
+            outlineColor: palette.primary.main,
+          },
+          '&::before': {
+            borderColor: palette.primary.main,
+            outlineColor: palette.primary.main,
+          },
+        },
+        root: {
+          '&:hover:not(.Mui-disabled)::before': {
+            borderBottom: `1px solid ${palette.primary.main}`,
+          },
+        },
+      },
+    },
+
     MuiAutocomplete: {
       styleOverrides: {
         option: {
@@ -29,14 +48,14 @@ theme = createTheme(theme, {
           },
 
           '&.Mui-focused': {
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: palette.primary.main,
             color: '#fff',
           },
-          // backgroundColor: '#fff',
+          backgroundColor: '#fff',
         },
         inputRoot: {
           '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.primary.main,
+            borderColor: palette.primary.main,
           },
         },
       },

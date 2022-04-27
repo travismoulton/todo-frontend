@@ -19,13 +19,17 @@ const CustomPickersDay = styled(PickersDay, {
   shouldForwardProp: (prop) => prop !== 'isSelectedDay',
 })<CustomPickerDayProps>(({ theme, isSelectedDay }) => ({
   ...(isSelectedDay && {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.dark,
 
     color: theme.palette.common.white,
-    '&:hover, &:focus': {
-      backgroundColor: theme.palette.secondary.dark,
+    '&:focus': {
+      backgroundColor: theme.palette.primary.dark,
     },
   }),
+  '&:hover': {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.common.white,
+  },
 })) as ComponentType<CustomPickerDayProps>;
 
 export default function CustomDay({ setDate }: { setDate: IProps['setDate'] }) {
@@ -33,7 +37,7 @@ export default function CustomDay({ setDate }: { setDate: IProps['setDate'] }) {
 
   const renderPickerDay = (
     date: Date,
-    selectedDates: Array<Date | null>,
+    _selectedDates: Array<Date | null>,
     pickersDayProps: PickersDayProps<Date>
   ) => {
     if (!value) {
@@ -41,6 +45,7 @@ export default function CustomDay({ setDate }: { setDate: IProps['setDate'] }) {
     }
 
     const isSelectedDay = isSameDay(date, value);
+    isSelectedDay && console.log(date);
 
     return (
       <CustomPickersDay
