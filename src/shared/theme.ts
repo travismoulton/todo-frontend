@@ -46,7 +46,6 @@ const theme = createTheme({
           '&[aria-selected="true"].Mui-focused': {
             color: '#000',
           },
-
           '&.Mui-focused': {
             backgroundColor: palette.primary.main,
             color: '#fff',
@@ -54,6 +53,16 @@ const theme = createTheme({
           backgroundColor: '#fff',
         },
         inputRoot: {
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: palette.primary.main,
+          },
+        },
+      },
+    },
+
+    MuiTextField: {
+      styleOverrides: {
+        root: {
           '&:hover .MuiOutlinedInput-notchedOutline': {
             borderColor: palette.primary.main,
           },

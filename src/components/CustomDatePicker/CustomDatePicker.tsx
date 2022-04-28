@@ -6,6 +6,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/';
 import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
 import isSameDay from 'date-fns/isSameDay';
+import { purple } from '@mui/material/colors';
 
 type CustomPickerDayProps = PickersDayProps<Date> & {
   isSelectedDay: boolean;
