@@ -39,18 +39,20 @@ const theme = createTheme({
 
     MuiAutocomplete: {
       styleOverrides: {
-        option: {
-          '&[aria-selected="true"]': {
-            color: '#000',
+        listbox: {
+          '& .MuiAutocomplete-option': {
+            '&[aria-selected="true"]': {
+              color: '#000',
+            },
+            '&[aria-selected="true"].Mui-focused': {
+              color: '#000',
+            },
+
+            '&.Mui-focused': {
+              backgroundColor: palette.primary.main,
+              color: '#fff',
+            },
           },
-          '&[aria-selected="true"].Mui-focused': {
-            color: '#000',
-          },
-          '&.Mui-focused': {
-            backgroundColor: palette.primary.main,
-            color: '#fff',
-          },
-          backgroundColor: '#fff',
         },
         inputRoot: {
           '&:hover .MuiOutlinedInput-notchedOutline': {
