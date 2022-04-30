@@ -6,14 +6,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/';
 import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
 import isSameDay from 'date-fns/isSameDay';
-import { purple } from '@mui/material/colors';
 
 type CustomPickerDayProps = PickersDayProps<Date> & {
   isSelectedDay: boolean;
 };
 
 interface IProps {
-  setDate: (date: Date | null) => void;
+  setDate: (date: string) => void;
 }
 
 const CustomPickersDay = styled(PickersDay, {
@@ -64,9 +63,13 @@ export default function CustomDay({ setDate }: { setDate: IProps['setDate'] }) {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
         value={value}
-        onChange={(newValue) => {
-          setValue(newValue);
-          setDate(newValue);
+        onChange={(date) => {
+          const dateStr = [date?.getFullYear(), date?.getMonth(), date?.getDate()].join(
+            '-'
+          );
+
+          setValue(date);
+          setDate(dateStr);
         }}
         renderDay={renderPickerDay}
         renderInput={(params) => <TextField {...params} sx={{ ...formStyles }} />}

@@ -20,7 +20,7 @@ const { addTodo } = utils;
 export interface ITodo {
   title: string;
   content: string;
-  dueDate: Date | null;
+  dueDate: string | null;
   category: string | null;
   priority: string | null;
 }
@@ -35,7 +35,14 @@ export default function AddTodo() {
 
   const navigate = useNavigate();
 
-  const [dueDate, setDueDate] = useState<Date | null>(new Date());
+  function buildTodayDateStr() {
+    const today = new Date();
+    const dateStr = [today.getFullYear(), today.getMonth(), today.getDate()].join('-');
+
+    return dateStr;
+  }
+
+  const [dueDate, setDueDate] = useState<string>(buildTodayDateStr());
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
   const [category, setCategory] = useState<string | null>(null);
   const [priority, setPriority] = useState<string | null>(null);
