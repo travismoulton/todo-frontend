@@ -65,7 +65,7 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          '&:hover .MuiOutlinedInput-notchedOutline': {
+          '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
             borderColor: palette.primary.main,
           },
         },
