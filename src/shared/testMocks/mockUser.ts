@@ -1,4 +1,4 @@
-import { UserData, ErrorData } from '../../components/Register/Register';
+import { UserData, ErrorData } from '../../components/Register/registerUtils';
 
 export const mockSuccessData: UserData = {
   status: 'success',

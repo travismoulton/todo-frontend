@@ -1,5 +1,24 @@
 import axios from '../../shared/axios';
-import { UserData, ErrorData } from './Register';
+
+export type ErrorData = {
+  status: 'fail';
+  data: {
+    message: string;
+  };
+};
+
+export type UserData = {
+  status: 'success';
+  data: {
+    user: {
+      name: string;
+      __v: string;
+      id: string;
+      _id: string;
+      password: string;
+    };
+  };
+};
 
 export const utils = {
   registerUser: async function (username: string, password: string) {

@@ -4,30 +4,10 @@ import { Box, Button, FormControl, Input, InputLabel, Typography } from '@mui/ma
 import { useNavigate, Link } from 'react-router-dom';
 
 import AuthFormInputError from '../AuthFormInputError/AuthFormInputError';
-import { utils } from './loginUtils';
+import { utils, UserData, ErrorData } from './loginUtils';
 import { useStore } from '../../shared/store/authStore';
 
 const { loginUser } = utils;
-
-export type ErrorData = {
-  status: 'fail';
-  data: {
-    message: string;
-  };
-};
-
-export type UserData = {
-  status: 'success';
-  data: {
-    user: {
-      name: string;
-      __v: string;
-      id: string;
-      _id: string;
-      password: string;
-    };
-  };
-};
 
 export default function Login() {
   const {

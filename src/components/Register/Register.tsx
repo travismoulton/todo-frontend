@@ -4,30 +4,10 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import AuthFormInputError from '../AuthFormInputError/AuthFormInputError';
-import { utils } from './registerUtils';
+import { utils, UserData, ErrorData } from './registerUtils';
 import { useStore } from '../../shared/store/authStore';
 
 const { registerUser } = utils;
-
-export type ErrorData = {
-  status: 'fail';
-  data: {
-    message: string;
-  };
-};
-
-export type UserData = {
-  status: 'success';
-  data: {
-    user: {
-      name: string;
-      __v: string;
-      id: string;
-      _id: string;
-      password: string;
-    };
-  };
-};
 
 export default function Register() {
   const {
