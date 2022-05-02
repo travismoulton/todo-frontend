@@ -9,6 +9,7 @@ import HomePage from './components/HomePage/HomePage';
 import Navbar from './components/Navigation/Navbar/Navbar';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
+import Logout from './components/Logout/Logout';
 import AddTodo from './components/AddTodo/AddTodo';
 import theme from './shared/theme';
 
@@ -16,7 +17,6 @@ const { checkForUser } = utils;
 
 function App() {
   const { setUser, user } = useStore();
-  console.log(user);
 
   useEffect(() => {
     (async () => {
@@ -37,10 +37,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div style={{ padding: '7rem' }} className="App">
-        <Navbar />
+        <Navbar isAuth={!!user} />
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/add-todo" element={<AddTodo />} />
           <Route path="/" element={<HomePage />} />
         </Routes>

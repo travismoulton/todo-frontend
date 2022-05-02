@@ -7,8 +7,6 @@ interface IProps {
 }
 
 export default function AuthFormInputError({ errors, input }: IProps) {
-  console.log(errors);
-
   const renderInputError = (message: string) => (
     <Typography
       variant="body1"

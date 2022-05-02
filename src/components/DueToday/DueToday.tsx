@@ -1,36 +1,20 @@
-import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useEffect } from 'react';
 
-import { utils } from '../AccordianTodos/accordianTodosUtils';
+import AccordianTodos from '../AccordianTodos/AccordianTodos';
 
-export default function DueToday() {
-  useEffect(() => {
-    (async () => {
-      utils.fetchTodos();
-    })();
-  }, []);
+interface IProps {
+  dueDate: 'Due Today' | 'Overdue';
+}
 
+export default function DueToday({ dueDate }: { dueDate: IProps['dueDate'] }) {
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <p>Accordian</p>
+        <Typography>{dueDate}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <ul>
-          <li>
-            <p>1</p>
-          </li>
-          <li>
-            <p>1</p>
-          </li>
-          <li>
-            <p>1</p>
-          </li>
-          <li>
-            <p>1</p>
-          </li>
-        </ul>
+        <AccordianTodos />
       </AccordionDetails>
     </Accordion>
   );

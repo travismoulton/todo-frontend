@@ -11,7 +11,11 @@ const StyledLink = styled(Link)`
   }
 `;
 
-export default function Navbar() {
+interface IProps {
+  isAuth: boolean;
+}
+
+export default function Navbar({ isAuth }: { isAuth: IProps['isAuth'] }) {
   return (
     <AppBar
       color="primary"
@@ -22,8 +26,9 @@ export default function Navbar() {
         justifyContent: 'space-around',
       }}
     >
-      <StyledLink to="/login">Login</StyledLink>
+      {!isAuth && <StyledLink to="/login">Login</StyledLink>}
       <StyledLink to="/add-todo">Add todo</StyledLink>
+      {isAuth && <StyledLink to="/logout">Logout</StyledLink>}
     </AppBar>
   );
 }
