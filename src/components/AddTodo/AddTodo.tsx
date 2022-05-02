@@ -20,7 +20,8 @@ const { addTodo } = utils;
 export interface ITodo {
   title: string;
   content: string;
-  dueDate: string | null;
+  dueDateStr: string | null;
+  dueDate: Date;
   category: string | null;
   priority: string | null;
 }
@@ -42,7 +43,8 @@ export default function AddTodo() {
     return dateStr;
   }
 
-  const [dueDate, setDueDate] = useState<string>(buildTodayDateStr());
+  const [dueDate, setDueDate] = useState<Date>(new Date());
+  const [dueDateStr, setDueDateStr] = useState<string>(buildTodayDateStr());
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
   const [category, setCategory] = useState<string | null>(null);
   const [priority, setPriority] = useState<string | null>(null);
@@ -52,6 +54,7 @@ export default function AddTodo() {
       title: watch('title'),
       content: watch('description'),
       dueDate,
+      dueDateStr,
       category,
       priority,
     };
@@ -112,7 +115,7 @@ export default function AddTodo() {
           />
         </FormControl>
 
-        <CustomDatePicker setDate={setDueDate} />
+        <CustomDatePicker setDateStr={setDueDateStr} setDate={setDueDate} />
 
         <FormControl sx={{ ...formStyles }}>
           <Autocomplete

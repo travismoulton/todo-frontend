@@ -12,7 +12,8 @@ type CustomPickerDayProps = PickersDayProps<Date> & {
 };
 
 interface IProps {
-  setDate: (date: string) => void;
+  setDateStr: (date: string) => void;
+  setDate: (date: Date) => void;
 }
 
 const CustomPickersDay = styled(PickersDay, {
@@ -32,7 +33,7 @@ const CustomPickersDay = styled(PickersDay, {
   },
 })) as ComponentType<CustomPickerDayProps>;
 
-export default function CustomDay({ setDate }: { setDate: IProps['setDate'] }) {
+export default function CustomDay({ setDate, setDateStr }: IProps) {
   const [value, setValue] = useState<Date | null>(new Date());
 
   const renderPickerDay = (
@@ -69,7 +70,8 @@ export default function CustomDay({ setDate }: { setDate: IProps['setDate'] }) {
           );
 
           setValue(date);
-          setDate(dateStr);
+          setDateStr(dateStr);
+          setDate(date as Date);
         }}
         renderDay={renderPickerDay}
         renderInput={(params) => <TextField {...params} sx={{ ...formStyles }} />}

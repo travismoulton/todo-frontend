@@ -1,4 +1,10 @@
-import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Divider,
+  Typography,
+} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import AccordianTodos from '../AccordianTodos/AccordianTodos';
@@ -9,11 +15,12 @@ interface IProps {
 
 export default function DueToday({ dueDate }: { dueDate: IProps['dueDate'] }) {
   return (
-    <Accordion>
+    <Accordion sx={{ width: '500px' }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography>{dueDate}</Typography>
       </AccordionSummary>
-      <AccordionDetails>
+      <Divider />
+      <AccordionDetails sx={{ padding: 0 }}>
         <AccordianTodos />
       </AccordionDetails>
     </Accordion>
