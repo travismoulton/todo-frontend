@@ -3,21 +3,9 @@ import { Fragment, useEffect, useState } from 'react';
 
 import AccordianTodoItem from '../AccordianTodoItem/AccordianTodoItem';
 import { utils } from './accordianTodosUtils';
+import { Todo } from '../../shared/types/todo';
 
 const { fetchDueToday, fetchOverDue } = utils;
-
-export type Todo = {
-  __v: number;
-  _id: string;
-  category?: string;
-  content?: string;
-  createdAt: Date;
-  dueDate?: string;
-  priority?: string;
-  title: string;
-  user: string;
-  isFinished: boolean;
-};
 
 interface IState {
   todos: Todo[];

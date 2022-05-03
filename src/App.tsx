@@ -11,6 +11,7 @@ import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import Logout from './components/Logout/Logout';
 import AddTodo from './components/AddTodo/AddTodo';
+import EditTodo from './components/EditTodo/EditTodo';
 import theme from './shared/theme';
 
 const { checkForUser } = utils;
@@ -43,6 +44,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/add-todo" element={<AddTodo />} />
+          <Route path="/edit-todo/:id" element={<EditTodo />} />
           <Route path="/" element={<HomePage />} />
         </Routes>
       </div>

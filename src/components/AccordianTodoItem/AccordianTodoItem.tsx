@@ -7,11 +7,12 @@ import {
   Modal,
   Typography,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { styled } from '@mui/material';
 
 import { utils } from './accordianTodoItemsUtils';
-import { Todo } from '../AccordianTodos/AccordianTodos';
+import { Todo } from '../../shared/types/todo';
 
 const { toggleTodoComplete } = utils;
 
@@ -49,6 +50,9 @@ export default function AccordianTodoItem({ todo, updateTodo }: IProps) {
     updateTodo(todo);
   }
 
+  console.log(typeof todo.dueDate);
+  console.log(todo);
+
   return (
     <>
       <ListItemButton
@@ -77,7 +81,9 @@ export default function AccordianTodoItem({ todo, updateTodo }: IProps) {
             <Typography>Description: {todo.content}</Typography>
             <Divider sx={{ width: '100%', margin: '10px 0' }} />
 
-            <Typography sx={{ marginRight: 'auto' }}>Due: {todo.dueDate}</Typography>
+            <Typography sx={{ marginRight: 'auto' }}>
+              Due: {todo.dueDate.substring(0, 10)}
+            </Typography>
             <Divider sx={{ width: '100%', margin: '6px 0' }} />
 
             {todo.category && (
@@ -95,6 +101,12 @@ export default function AccordianTodoItem({ todo, updateTodo }: IProps) {
             <Box sx={{ marginRight: 'auto' }}>
               <Typography sx={{ display: 'inline-block' }}>Mark Complete: </Typography>
               <Checkbox checked={todo.isFinished} onChange={checkboxClickHandler} />
+            </Box>
+
+            <Box sx={{ marginRight: 'auto' }}>
+              <Link to={`/edit-todo/${todo._id}`} state={{ todo }}>
+                Edit Todo
+              </Link>
             </Box>
           </StyledBox>
         </Fade>
