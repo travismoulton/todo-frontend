@@ -13,7 +13,7 @@ interface IProps {
   dueDate: 'Due Today' | 'Overdue';
 }
 
-export default function DueToday({ dueDate }: { dueDate: IProps['dueDate'] }) {
+export default function HomePageAccordian({ dueDate }: { dueDate: IProps['dueDate'] }) {
   return (
     <Accordion sx={{ width: '500px' }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
