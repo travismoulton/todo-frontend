@@ -4,7 +4,7 @@ import { Fragment, useEffect, useState } from 'react';
 import AccordianTodoItem from '../AccordianTodoItem/AccordianTodoItem';
 import { utils } from './accordianTodosUtils';
 
-const { fetchDueToday } = utils;
+const { fetchDueToday, fetchOverDue } = utils;
 
 export type Todo = {
   __v: number;
@@ -23,7 +23,11 @@ interface IState {
   todos: Todo[];
 }
 
-export default function AccordianTodos() {
+interface IProps {
+  dueDate: 'Due Today' | 'Overdue';
+}
+
+export default function AccordianTodos({ dueDate }: IProps) {
   const [todos, setTodos] = useState<IState['todos']>([]);
 
   function updateTodoHandler(updatedTodo: Todo) {
@@ -38,10 +42,12 @@ export default function AccordianTodos() {
 
   useEffect(() => {
     (async () => {
-      const { data } = await fetchDueToday();
+      const fetchTodos = dueDate === 'Due Today' ? fetchDueToday : fetchOverDue;
+
+      const { data } = await fetchTodos();
       setTodos(data);
     })();
-  }, []);
+  }, [dueDate]);
 
   const todoDisplay = todos.map((todo, i) => (
     <Fragment key={todo._id}>

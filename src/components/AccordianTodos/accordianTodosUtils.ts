@@ -8,7 +8,7 @@ export const utils = {
   },
 
   fetchOverDue: async function () {
-    const { data } = await axios.get('/route here');
+    const { data } = await axios.get('/todos/overdue');
 
     return data;
   },

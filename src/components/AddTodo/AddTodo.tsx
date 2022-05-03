@@ -14,13 +14,15 @@ import { useState } from 'react';
 import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 
 import { utils } from './addTodoUtils';
+import { utils as globalUtils } from '../../shared/utils';
 
 const { addTodo } = utils;
+const { generateDateStr } = globalUtils;
 
 export interface ITodo {
   title: string;
   content: string;
-  dueDateStr: string | null;
+  dueDateStr: number | null;
   dueDate: Date;
   category: string | null;
   priority: string | null;
@@ -36,15 +38,8 @@ export default function AddTodo() {
 
   const navigate = useNavigate();
 
-  function buildTodayDateStr() {
-    const today = new Date();
-    const dateStr = [today.getFullYear(), today.getMonth(), today.getDate()].join('-');
-
-    return dateStr;
-  }
-
   const [dueDate, setDueDate] = useState<Date>(new Date());
-  const [dueDateStr, setDueDateStr] = useState<string>(buildTodayDateStr());
+  const [dueDateStr, setDueDateStr] = useState<number>(generateDateStr(new Date()));
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
   const [category, setCategory] = useState<string | null>(null);
   const [priority, setPriority] = useState<string | null>(null);

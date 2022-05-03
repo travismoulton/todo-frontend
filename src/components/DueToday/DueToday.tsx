@@ -21,7 +21,7 @@ export default function DueToday({ dueDate }: { dueDate: IProps['dueDate'] }) {
       </AccordionSummary>
       <Divider />
       <AccordionDetails sx={{ padding: 0 }}>
-        <AccordianTodos />
+        <AccordianTodos dueDate={dueDate} />
       </AccordionDetails>
     </Accordion>
   );

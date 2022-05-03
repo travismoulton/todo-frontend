@@ -7,12 +7,16 @@ import { DatePicker } from '@mui/x-date-pickers/';
 import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
 import isSameDay from 'date-fns/isSameDay';
 
+import { utils } from '../../shared/utils';
+
+const { generateDateStr } = utils;
+
 type CustomPickerDayProps = PickersDayProps<Date> & {
   isSelectedDay: boolean;
 };
 
 interface IProps {
-  setDateStr: (date: string) => void;
+  setDateStr: (date: number) => void;
   setDate: (date: Date) => void;
 }
 
@@ -65,12 +69,11 @@ export default function CustomDay({ setDate, setDateStr }: IProps) {
       <DatePicker
         value={value}
         onChange={(date) => {
-          const dateStr = [date?.getFullYear(), date?.getMonth(), date?.getDate()].join(
-            '-'
-          );
+          // The date will be store in the database as an integer for easy look up on based
+          // due today / overdue
 
           setValue(date);
-          setDateStr(dateStr);
+          setDateStr(generateDateStr(date as Date));
           setDate(date as Date);
         }}
         renderDay={renderPickerDay}
