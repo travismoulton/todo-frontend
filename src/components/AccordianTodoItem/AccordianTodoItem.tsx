@@ -63,13 +63,32 @@ export default function AccordianTodoItem({ todo, updateTodo }: IProps) {
           justifyContent: 'space-between',
           paddingX: '25px',
           '& span': {
-            flex: 1,
+            width: '33%',
+
+            '& p': {
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            },
           },
         }}
       >
-        <span>{todo.title}</span>
-        {todo.category ? <span>@{todo.category}</span> : <span></span>}
-        <span>Priority: {todo.priority}</span>
+        <span>
+          <Typography>{todo.title}</Typography>
+        </span>
+        {todo.category ? (
+          <span>
+            <Typography>@{todo.category}</Typography>
+          </span>
+        ) : (
+          <span></span>
+        )}
+        {todo.priority ? (
+          <Typography>
+            <span>Priority: {todo.priority}</span>
+          </Typography>
+        ) : (
+          <span></span>
+        )}
       </ListItemButton>
 
       <Modal open={open} onClose={handleClose} BackdropProps={{ timeout: 250 }}>
@@ -93,10 +112,14 @@ export default function AccordianTodoItem({ todo, updateTodo }: IProps) {
               </>
             )}
 
-            <Typography sx={{ marginRight: 'auto' }}>
-              Priority: {todo.priority}
-            </Typography>
-            <Divider sx={{ width: '100%', margin: '6px 0' }} />
+            {todo.priority && (
+              <>
+                <Typography sx={{ marginRight: 'auto' }}>
+                  Priority: {todo.priority}
+                </Typography>
+                <Divider sx={{ width: '100%', margin: '6px 0' }} />
+              </>
+            )}
 
             <Box sx={{ marginRight: 'auto' }}>
               <Typography sx={{ display: 'inline-block' }}>Mark Complete: </Typography>
