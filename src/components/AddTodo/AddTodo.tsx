@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
-
+import FormInputError from '../FormInputError/FormInputError';
 import { utils } from './addTodoUtils';
 import { utils as globalUtils } from '../../shared/utils';
 
@@ -82,6 +82,7 @@ export default function AddTodo() {
         }}
         onSubmit={handleSubmit(submitHandler)}
       >
+        <FormInputError input="title" errors={errors} />
         <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="title">Title: </InputLabel>
           <Input

@@ -3,7 +3,7 @@ import { Box, Button, FormControl, Input, InputLabel, Typography } from '@mui/ma
 import { useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import AuthFormInputError from '../AuthFormInputError/AuthFormInputError';
+import AuthFormInputError from '../FormInputError/FormInputError';
 import { utils, UserData, ErrorData } from './registerUtils';
 import { useStore } from '../../shared/store/authStore';
 

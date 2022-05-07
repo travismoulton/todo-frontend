@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Box, Button, FormControl, Input, InputLabel, Typography } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
 
-import AuthFormInputError from '../AuthFormInputError/AuthFormInputError';
+import FormInputError from '../FormInputError/FormInputError';
 import { utils, UserData, ErrorData } from './loginUtils';
 import { useStore } from '../../shared/store/authStore';
 
@@ -85,7 +85,7 @@ export default function Login() {
           width: '100%',
         }}
       >
-        <AuthFormInputError errors={errors} input="name" />
+        <FormInputError errors={errors} input="name" />
 
         <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="name">Your name: </InputLabel>
@@ -97,7 +97,7 @@ export default function Login() {
           />
         </FormControl>
 
-        <AuthFormInputError errors={errors} input="password" />
+        <FormInputError errors={errors} input="password" />
 
         <FormControl sx={{ ...formStyles }}>
           <InputLabel htmlFor="password">Your password: </InputLabel>
