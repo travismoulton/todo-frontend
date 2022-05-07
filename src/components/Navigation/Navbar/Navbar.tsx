@@ -34,7 +34,7 @@ export default function Navbar({ isAuth }: IProps) {
         <HomeIcon /> Home
       </StyledLink>
       {!isAuth && <StyledLink to="/login">Login</StyledLink>}
-      <StyledLink to="/add-todo">Add todo</StyledLink>
+      {isAuth && <StyledLink to="/add-todo">Add todo</StyledLink>}
       {isAuth && <StyledLink to="/logout">Logout</StyledLink>}
     </AppBar>
   );
