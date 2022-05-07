@@ -88,6 +88,10 @@ export default function AddTodo() {
           <Input
             {...register('title', {
               required: 'Todo must have a title',
+              maxLength: {
+                value: 30,
+                message: 'Title must be less than 30 characters',
+              },
             })}
           />
         </FormControl>
