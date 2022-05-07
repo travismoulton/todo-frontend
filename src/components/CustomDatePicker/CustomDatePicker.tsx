@@ -18,6 +18,7 @@ type CustomPickerDayProps = PickersDayProps<Date> & {
 interface IProps {
   setDateStr: (date: number) => void;
   setDate: (date: Date) => void;
+  defaultDate?: Date;
 }
 
 const CustomPickersDay = styled(PickersDay, {
@@ -37,8 +38,8 @@ const CustomPickersDay = styled(PickersDay, {
   },
 })) as ComponentType<CustomPickerDayProps>;
 
-export default function CustomDay({ setDate, setDateStr }: IProps) {
-  const [value, setValue] = useState<Date | null>(new Date());
+export default function CustomDay({ setDate, setDateStr, defaultDate }: IProps) {
+  const [value, setValue] = useState<Date | null>(defaultDate || new Date());
 
   const renderPickerDay = (
     date: Date,

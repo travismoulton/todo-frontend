@@ -53,8 +53,8 @@ export default function EditTodo() {
   const [dueDate, setDueDate] = useState<Date>(new Date(todo.dueDate));
   const [dueDateStr, setDueDateStr] = useState<number>(todo.dueDateStr);
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(!!todo.category);
-  const [category, setCategory] = useState<string | null>(null);
-  const [priority, setPriority] = useState<string | null>(null);
+  const [category, setCategory] = useState<string | null>(todo.category);
+  const [priority, setPriority] = useState<string | null>(todo.priority);
 
   async function submitHandler() {
     const todoData: ITodo = {
@@ -125,7 +125,11 @@ export default function EditTodo() {
           />
         </FormControl>
 
-        <CustomDatePicker setDateStr={setDueDateStr} setDate={setDueDate} />
+        <CustomDatePicker
+          defaultDate={new Date(todo.dueDate)}
+          setDateStr={setDueDateStr}
+          setDate={setDueDate}
+        />
 
         <FormControl sx={{ ...formStyles }}>
           <Autocomplete

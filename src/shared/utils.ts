@@ -1,5 +1,5 @@
 export const utils = {
   generateDateStr: function (date: Date) {
-    return +[date.getFullYear(), date.getMonth(), date.getDate()].join('');
+    return +date.toISOString().substring(0, 10).split('-').join('');
   },
 };
